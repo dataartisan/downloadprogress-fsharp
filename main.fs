@@ -21,8 +21,7 @@ let fetchAsync(name, url:string) =
                     let contentLengthString =
                         webClient.ResponseHeaders.Get "Content-Length"
                     if !contentLength = 0L && contentLengthString <> null then
-                        contentLength :=
-                            Int64.Parse contentLengthString
+                        contentLength := Int64.Parse contentLengthString
                     bytesReceived := !bytesReceived + args.BytesReceived
                     if !contentLength > 0L then
                         printfn "received %A of %A bytes (%A %%)"
@@ -37,14 +36,10 @@ let fetchAsync(name, url:string) =
             | ex -> printfn "%s" (ex.Message);
     }
 
-let args = System.Environment.GetCommandLineArgs()
-
-let usage() =
-    printfn "usage: %s url" args.[0]
-
 let main() =
+    let args = System.Environment.GetCommandLineArgs()
     if args.Length <> 2 then
-        usage()
+        printfn "usage: %s url" args.[0]
         System.Environment.Exit 1
     let url = args.[1]
     printfn "downloading %s" url
