@@ -18,10 +18,9 @@ let fetchAsync(name, url:string) =
             let bytesReceived = ref 0L
             webClient.DownloadProgressChanged.Add(
                 fun args ->
-                    let contentLengthString =
-                        webClient.ResponseHeaders.Get "Content-Length"
-                    if !contentLength = 0L && contentLengthString <> null then
-                        contentLength := Int64.Parse contentLengthString
+                    if !contentLength = 0L && webClient.ResponseHeaders.Get "Content-Length" <> null then
+                        contentLength :=
+                            webClient.ResponseHeaders.Get "Content-Length" |> Int64.Parse
                     bytesReceived := !bytesReceived + args.BytesReceived
                     if !contentLength > 0L then
                         printfn "received %A of %A bytes (%A %%)"
